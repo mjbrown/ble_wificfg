@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+    <service uuid="1800">
+      <description>Generic Access Profile</description>
+      <characteristic uuid="2a00">
+        <properties read="true" const="true" />
+        <value>Bluegiga BLED112</value>
+      </characteristic>
+      <characteristic uuid="2a01">
+        <properties read="true" const="true" />
+        <value type="hex">8000</value>
+      </characteristic>
+    </service>
+    <service uuid="1801" type="primary" advertise="true">
+        <description>SSID/PSK WiFi Configuration Control</description>
+        <characteristic uuid="00010000-0000-F000-F000-F00000000000">
+            <description>SSID</description>
+            <properties read="true" write="true" />
+            <value variable_length="true" length="20"/>
+        </characteristic>
+        <characteristic uuid="00020000-0000-F000-F000-F00000000000">
+            <description>Passkey</description>
+            <properties write="true" />
+            <value type="utf-8" variable_length="true" length="20"/>
+        </characteristic>
+        <characteristic uuid="00030000-0000-F000-F000-F00000000000">
+            <description>Wireless Interface</description>
+            <properties read="true" write="true" />
+            <value type="utf-8" variable_length="true" length="20">wlan0</value>
+        </characteristic>
+        <characteristic uuid="00040000-0000-F000-F000-F00000000000">
+            <description>IP Address</description>
+            <properties read="true" indicate="true" />
+            <value type="utf-8" variable_length="true" length="20"/>
+        </characteristic>
+    </service>
+</configuration>
