@@ -1,22 +1,10 @@
-import logging
-import sys
 import time
 from bgapi.bgmodule import BlueGigaClient, GATTService, GATTCharacteristic
-
-term = logging.StreamHandler(sys.stdout)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-term.setFormatter(formatter)
-api_logger = logging.getLogger("bgapi")
-api_logger.addHandler(term)
-api_logger.setLevel(level=logging.INFO)
-
-SSID_UUID = "\x00\x01\x00\x00\x00\x00\xF0\x00\xF0\x00\xF0\x00\x00\x00\x00\x00"[::-1]
-PSK_UUID = "\x00\x02\x00\x00\x00\x00\xF0\x00\xF0\x00\xF0\x00\x00\x00\x00\x00"[::-1]
-INTERFACE_UUID = "\x00\x03\x00\x00\x00\x00\xF0\x00\xF0\x00\xF0\x00\x00\x00\x00\x00"[::-1]
-IPADDRESS_UUID = "\x00\x04\x00\x00\x00\x00\xF0\x00\xF0\x00\xF0\x00\x00\x00\x00\x00"[::-1]
+from wificfg_server import UUIDS
 
 def Main():
     cfg_client = BlueGigaClient(port="COM9", baud=115200, timeout=0.1)
+    cfg_client.pipe_logs_to_terminal()
     # BLE Device configuration and start advertising
     cfg_client.reset_ble_state()
     resp = cfg_client.scan_all(timeout=4)
