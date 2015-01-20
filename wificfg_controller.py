@@ -14,19 +14,22 @@ def Main():
         connection.find_information(service=service)
         connection.read_by_type(service=service, type=GATTCharacteristic.CHARACTERISTIC_UUID)
         connection.read_by_type(service=service, type=GATTCharacteristic.CLIENT_CHARACTERISTIC_CONFIG)
-        connection.read_by_type(service=service, type=GATTCharacteristic.USER_DESCRIPTION)
+        #connection.read_by_type(service=service, type=GATTCharacteristic.USER_DESCRIPTION)
+
+    app_handles = {}
+    for key, value in UUIDS.iteritems():
+        app_handles[key] = connection.get_handles_by_uuid(value)[0]
 
     for characteristic in connection.get_characteristics():
-        if characteristic.is_readable():
-            connection.read_by_handle(characteristic.value_handle)
         if characteristic.has_indicate():
             connection.characteristic_subscription(characteristic=characteristic, indicate=True, notify=False)
 
-    for characteristic in connection.get_characteristics():
-        description = characteristic.get_descriptor_by_uuid(GATTCharacteristic.USER_DESCRIPTION)
-        if description:
-            print "%s - Handle:%d - Current Value:%s" % (description.value, characteristic.handle, characteristic.value)
-
+    connection.write_by_handle(app_handles["SSID"], "Some SSID", timeout=1)
+    connection.write_by_handle(app_handles["PSK"], "Some PSK", timeout=1)
+    connection.write_by_handle(app_handles["USERNAME"], "Some Username", timeout=1)
+    connection.write_by_handle(app_handles["PASSWORD"], "Some Passowrd", timeout=1)
+    connection.write_by_handle(app_handles["ACTIONS"], "\x00\x01", timeout=1)
+    time.sleep(3)
     cfg_client.disconnect(connection)
 
     time.sleep(1)
