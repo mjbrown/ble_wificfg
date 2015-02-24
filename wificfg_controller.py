@@ -1,5 +1,5 @@
 import time
-from bgapi.bgmodule import BlueGigaClient, GATTService, GATTCharacteristic
+from bgapi.module import BlueGigaClient, GATTService, GATTCharacteristic
 from wificfg_server import UUIDS
 
 def Main():

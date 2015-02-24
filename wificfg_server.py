@@ -1,6 +1,6 @@
 import time
 import logging
-from bgapi.bgmodule import BlueGigaServer
+from bgapi.module import BlueGigaServer
 from bgapi.cmd_def import connection_status_mask
 import subprocess
 
